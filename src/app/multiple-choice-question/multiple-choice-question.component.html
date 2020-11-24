@@ -1,0 +1,29 @@
+<div>
+  <p>
+    {{question.title}}
+  </p>
+  <ul class="list-group ">
+    <li
+      class="pl-2"
+      [ngClass]="{'list-group-item-success': grading && (question.correct === choice), 'list-group-item-danger': grading && !correctAnswer && (selectedChoice === choice)}"
+      *ngFor="let choice of question.choices" class="list-group-item"
+    >
+      <input
+        ngModel="{{selectedChoice}}"
+        type="radio"
+        name={{question._id}}
+        [value]="choice"
+        (change)="change(choice)"
+        [disabled]="grading"
+      />
+        {{choice}}
+    </li>
+  </ul>
+  <p class="mt-2">
+    Selected Answer: {{selectedChoice}} {{grading ? correctAnswer ? 'is correct!' : 'is wrong.' : ''}}
+  </p>
+  <button class="btn btn-success" (click)="grade()">
+      Grade
+  </button>
+
+</div>
