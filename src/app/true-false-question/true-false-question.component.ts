@@ -1,44 +1,43 @@
 import {Component, Input, OnInit, Output} from '@angular/core';
 import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {ActivatedRoute} from '@angular/router';
 import { EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-multiple-choice-question',
-  templateUrl: './multiple-choice-question.component.html',
-  styleUrls: ['./multiple-choice-question.component.css']
+  selector: 'app-true-false-question',
+  templateUrl: './true-false-question.component.html',
+  styleUrls: ['./true-false-question.component.css']
 })
-export class MultipleChoiceQuestionComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute) { }
+export class TrueFalseQuestionComponent implements OnInit {
 
   @Input()
-  question = {_id: '', title: '', question: '', choices: [], correct: '', answer: '', type: '' };
+  question = {_id: '', title: '', question: '', choices: '', correct: '', answer: '', type: '' };
 
   @Input()
   item: string;
 
   @Input()
-  answer = ''
-
-  selectedChoice = ''
-
-  grading = false;
-  correctAnswer = false
-  faCheck = faCheck; faTimes = faTimes;
+  answer = '';
 
   @Output()
-  answerChange = new EventEmitter<string>()
+  answerChange = new EventEmitter<string>();
+
+  selectedChoice = '';
+
+  grading = false;
+  correctAnswer = false;
+  faCheck = faCheck; faTimes = faTimes;
 
   change = (val) => {
     this.selectedChoice = val;
-    console.log(this.selectedChoice);
   }
 
   grade = () => {
+    console.log(this.question);
     this.correctAnswer = this.selectedChoice === this.question.correct;
     this.grading = true;
   }
+
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -46,5 +45,4 @@ export class MultipleChoiceQuestionComponent implements OnInit {
   submitAnswer = () => {
     this.answerChange.emit(this.answer);
   }
-
 }
